@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "aws-cicd"
+version = "0.1.0"
+description = "An example for a cicd pipline using aws"
+authors = ["Christian Dienbauer <christian.dienbauer@dreamcodefactory.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+
+python = "^3.12"
+fastapi = "^0.111.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
