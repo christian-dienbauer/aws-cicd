@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from greetings import get_greeting
+from src.greetings import get_greeting
 
 app = FastAPI()
 
