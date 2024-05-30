@@ -4,6 +4,8 @@ jobs:
   Unit-Tests:
     runs-on: codebuild-GitHubRunner-aws-cicd-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
+      - name: Get python version
+        run: python3 --version
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Install poetry
