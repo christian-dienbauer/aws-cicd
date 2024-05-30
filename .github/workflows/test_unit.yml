@@ -2,6 +2,6 @@ name: Hello World
 on: [push]
 jobs:
   Hello-World-Job:
-    runs-on: codebuild-aws-cicd-${{ github.run_id }}-${{ github.run_attempt }}
+    runs-on: codebuild-GitHubRunner-aws-cicd-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - run: echo "Hello World!"
