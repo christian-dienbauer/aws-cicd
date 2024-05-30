@@ -4,8 +4,12 @@ jobs:
   Unit-Tests:
     runs-on: codebuild-GitHubRunner-aws-cicd-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
-      - name: Get python version
-        run: python3 --version
+      - name: Download python
+        run: curl -O https://www.python.org/ftp/python/3.12.3/Python-3.12.3.tgz | tar xzf Python-3.12.0.tgz | cd Python-3.12.0
+      - name: Configure the build environment
+        run: ./configure --enable-optimizations
+      - name: Build and install Python 3.12
+        run: make altinstall | cd ..
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Install poetry
