@@ -6,6 +6,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: List
+        run: ls -l
       - name: Install poetry
         run: pip3 install poetry
       - name: Install virtual environment
@@ -14,5 +16,4 @@ jobs:
         run: source .venv/bin/activate
       - name: Run unit tests
         run: make test_unit
-      - name: List
-        run: ls -l
+      
