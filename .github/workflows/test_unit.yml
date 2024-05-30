@@ -13,5 +13,7 @@ jobs:
       - name: Install virtual environment
         run: poetry config --local virtualenvs.in-project true | poetry install
       - name: Activate virtual environment and run unit tests
-        run: source .venv/bin/activate | make test_unit
+        run: |
+          source .venv/bin/activate
+          make test_unit
       
