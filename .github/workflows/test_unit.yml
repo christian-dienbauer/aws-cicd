@@ -14,3 +14,5 @@ jobs:
         run: source .venv/bin/activate
       - name: Run unit tests
         run: make test_unit
+      - name: List
+        run: ls -l
