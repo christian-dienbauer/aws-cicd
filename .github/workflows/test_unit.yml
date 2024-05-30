@@ -9,7 +9,7 @@ jobs:
       - name: Install poetry
         run: pip3 install poetry
       - name: Install virtual environment
-        run: poetry config virtualenvs.in-project | poetry install
+        run: poetry install --local
       - name: Activate virtual environment
         run: source .venv/bin/activate
       - name: Run unit tests
