@@ -1,3 +1,4 @@
+import pytest
 from src.greetings import get_greeting
 
 
@@ -10,4 +11,8 @@ def test_greetings():
     assert greeting == 'Welcome Chris'
 
 def test_greetings_no_name():
-    pass
+
+    name = ""
+
+    with pytest.raises(ValueError, match="Name is missing!"):
+        get_greeting(name)
