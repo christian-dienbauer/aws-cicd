@@ -11,7 +11,7 @@ jobs:
           pip3 install poetry
           poetry config --local virtualenvs.in-project true
           poetry install
-      - name: Run unit tests
+      - name: Run api tests
         run: |
           source .venv/bin/activate
           make test_api
