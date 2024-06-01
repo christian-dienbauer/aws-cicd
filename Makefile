@@ -5,3 +5,6 @@ run:
 
 test_unit:
 	pytest tests/unit -v
+
+test_api:
+	pytest tests/api -v
