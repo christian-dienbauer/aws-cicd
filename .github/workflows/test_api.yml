@@ -1,0 +1,18 @@
+name: Unit API
+on: [pull_request]
+jobs:
+  Unit-Tests:
+    runs-on: codebuild-GitHubRunner-aws-cicd-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install virtual envrionment
+        run: | 
+          pip3 install poetry
+          poetry config --local virtualenvs.in-project true
+          poetry install
+      - name: Run unit tests
+        run: |
+          source .venv/bin/activate
+          make test_api
+      
