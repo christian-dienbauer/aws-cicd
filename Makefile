@@ -8,3 +8,9 @@ test_unit:
 
 test_api:
 	pytest tests/api -v
+
+cloudformation_deploy:
+	aws cloudformation create-stack --stack-name my-codebuild-stack --template-body file://iac/codebuild_project.yml --capabilities CAPABILITY_IAM
+
+cloudformation_delete:
+	aws cloudformation delete-stack --stack-name my-codebuild-stack
