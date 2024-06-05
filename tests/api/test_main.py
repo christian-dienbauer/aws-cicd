@@ -1,10 +1,10 @@
 import requests
 
-BASE_URL = "http://127.0.0.1:8080"
+SERVER_URL = "http://0.0.0.0:8000"
 
 def test_root():
 
-    response = requests.get(f"{BASE_URL}/")
+    response = requests.get(f"{SERVER_URL}/")
 
     body = response.json()
 

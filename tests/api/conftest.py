@@ -5,7 +5,7 @@ import requests
 
 # Adjust the command as needed for your application
 START_SERVER_COMMAND = ["make", "run"]
-SERVER_URL = "http://127.0.0.1:8080"  # Update the URL and port as needed
+SERVER_URL = "http://0.0.0.0:8000"  # Update the URL and port as needed
 
 @pytest.fixture(scope="session", autouse=True)
 def start_server():
