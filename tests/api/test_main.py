@@ -9,4 +9,4 @@ def test_root():
     body = response.json()
 
     assert response.status_code == 200
-    assert body == {"greeting":"Welcome Chris"}
+    assert body == {"greeting":"Hello World"}
