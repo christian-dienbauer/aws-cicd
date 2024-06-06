@@ -23,4 +23,6 @@ jobs:
         uses: actions/checkout@v4
       - name: Build docker image
         run: make docker_build
+      - name: Push docker image
+        run: make docker_push
       
