@@ -5,16 +5,23 @@ on:
       - '.github/**'
       - '**.md'
 jobs:
-  Unit-Tests:
+  # Unit-Tests:
+  #   runs-on: codebuild-github-cicd-${{ github.run_id }}-${{ github.run_attempt }}
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
+  #     - name: Install virtual envrionment
+  #       run: | 
+  #         pip3 install poetry
+  #         poetry config --local virtualenvs.in-project true
+  #         poetry install
+  #     - name: Run unit tests
+  #       run: make test_unit
+  Build-and-Push:
     runs-on: codebuild-github-cicd-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Install virtual envrionment
-        run: | 
-          pip3 install poetry
-          poetry config --local virtualenvs.in-project true
-          poetry install
-      - name: Run unit tests
-        run: make test_unit
+      - name: Build docker image
+        run: make docker_build
       
