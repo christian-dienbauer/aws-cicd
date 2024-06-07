@@ -7,4 +7,4 @@ def get_greeting(name:str):
     if name == "":
         raise ValueError("Name is missing!")
     
-    return "Welcome " + name
+    return "Hello " + name

@@ -1,7 +1,7 @@
 name: Unit API
 on: [pull_request]
 jobs:
-  Unit-Tests:
+  Api-Tests:
     runs-on: codebuild-github-cicd-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - name: Checkout repository
@@ -12,7 +12,5 @@ jobs:
           poetry config --local virtualenvs.in-project true
           poetry install
       - name: Run api tests
-        run: |
-          source .venv/bin/activate
-          make test_api
+        run: make test_api
       

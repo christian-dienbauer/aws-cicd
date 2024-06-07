@@ -1,0 +1,53 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation template to create an OIDC identity provider for GitHub.
+
+Resources:
+  GitHubOIDCProvider:
+    Type: 'AWS::IAM::OIDCProvider'
+    Properties: 
+      Url: 'https://token.actions.githubusercontent.com'
+      ClientIdList: 
+        - 'sts.amazonaws.com'
+      ThumbprintList: 
+        - '1b511abead59c6ce207077c0bf0e0043b1382612' # This is the thumbprint for GitHub's root CA certificate
+
+  GitHubActionsRole:
+    Type: 'AWS::IAM::Role'
+    Properties: 
+      RoleName: 'GitHubActionsRole'
+      AssumeRolePolicyDocument: 
+        Version: '2012-10-17'
+        Statement: 
+          - Effect: 'Allow'
+            Principal: 
+              Federated: !GetAtt GitHubOIDCProvider.Arn
+            Action: 'sts:AssumeRoleWithWebIdentity'
+            Condition: 
+              StringEquals: 
+                'token.actions.githubusercontent.com:aud': 'sts.amazonaws.com'
+              StringLike: 
+                'token.actions.githubusercontent.com:sub': 'repo:dieni/*' # Update to your needs
+      Policies:
+        - PolicyName: 'ECRAccessPolicy'
+          PolicyDocument: 
+            Version: '2012-10-17'
+            Statement: 
+              - Effect: 'Allow'
+                Action: 
+                  - 'ecr:GetAuthorizationToken'
+                  - 'ecr:BatchCheckLayerAvailability'
+                  - 'ecr:PutImage'
+                  - 'ecr:InitiateLayerUpload'
+                  - 'ecr:UploadLayerPart'
+                  - 'ecr:CompleteLayerUpload'
+                Resource: 
+                  - '*'
+
+Outputs:
+  GitHubOIDCProviderArn:
+    Description: 'The ARN of the created GitHub OIDC provider'
+    Value: !GetAtt GitHubOIDCProvider.Arn
+
+  GitHubActionsRoleArn:
+    Description: 'The ARN of the role to be assumed by GitHub Actions'
+    Value: !GetAtt GitHubActionsRole.Arn

@@ -1,5 +1,8 @@
 name: Unit Tests
-on: [push]
+on:
+  push:
+    paths-ignore:
+      - '**.md'
 jobs:
   Unit-Tests:
     runs-on: codebuild-github-cicd-${{ github.run_id }}-${{ github.run_attempt }}
@@ -12,7 +15,5 @@ jobs:
           poetry config --local virtualenvs.in-project true
           poetry install
       - name: Run unit tests
-        run: |
-          source .venv/bin/activate
-          make test_unit
-      
+        run: make test_unit
+  
