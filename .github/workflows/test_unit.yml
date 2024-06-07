@@ -2,27 +2,20 @@ name: Unit Tests
 on:
   push:
     paths-ignore:
+      - '*' # remove
       - '**.md'
 jobs:
-  # Unit-Tests:
-  #   runs-on: codebuild-github-cicd-${{ github.run_id }}-${{ github.run_attempt }}
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v4
-  #     - name: Install virtual envrionment
-  #       run: | 
-  #         pip3 install poetry
-  #         poetry config --local virtualenvs.in-project true
-  #         poetry install
-  #     - name: Run unit tests
-  #       run: make test_unit
-  Build-and-Push:
+  Unit-Tests:
     runs-on: codebuild-github-cicd-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Build docker image
-        run: make docker_build
-      - name: Push docker image
-        run: make docker_push
+      - name: Install virtual envrionment
+        run: | 
+          pip3 install poetry
+          poetry config --local virtualenvs.in-project true
+          poetry install
+      - name: Run unit tests
+        run: make test_unit
+  
       
