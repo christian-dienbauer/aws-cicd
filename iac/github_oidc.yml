@@ -20,13 +20,13 @@ Resources:
         Statement: 
           - Effect: 'Allow'
             Principal: 
-              Federated: 'arn:aws:iam::058264264767:oidc-provider/token.actions.githubusercontent.com'
+              Federated: !GetAtt GitHubOIDCProvider.Arn
             Action: 'sts:AssumeRoleWithWebIdentity'
             Condition: 
               StringEquals: 
                 'token.actions.githubusercontent.com:aud': 'sts.amazonaws.com'
               StringLike: 
-                'token.actions.githubusercontent.com:sub': 'repo:dieni/*'
+                'token.actions.githubusercontent.com:sub': 'repo:dieni/*' # Update to your needs
       Policies:
         - PolicyName: 'ECRAccessPolicy'
           PolicyDocument: 

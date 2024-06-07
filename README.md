@@ -65,7 +65,7 @@ make cloudformation_deploy
 
 ## How to use the repository
 
-The repository provides mechanisms for continious integration and for continious delivery
+The repository provides mechanisms for continuous integration and for continuous delivery
 
 
 

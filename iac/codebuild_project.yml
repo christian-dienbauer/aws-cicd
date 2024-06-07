@@ -11,7 +11,7 @@ Parameters:
     Type: String
     Description: The name of the CodeBuild project
   GitHubRepo:
-    Default: https://github.com/dieni/aws-cicd # Remove me
+    Default: https://github.com/dieni/aws-cicd # Update
     Type: String
     Description: The URL to the GitHub repository
   
