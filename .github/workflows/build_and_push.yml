@@ -20,8 +20,9 @@ jobs:
           with:
             role-to-assume: arn:aws:iam::058264264767:role/GitHub-Actions
             aws-region: ${{ env.AWS_REGION }}
-        - name: Docker login to ECR
-          run: make docker_login
+        - name: Log in to Amazon ECR
+          id: login-ecr
+          uses: aws-actions/amazon-ecr-login@v2
         - name: Build docker image
           run: make docker_build
         - name: Push docker image
