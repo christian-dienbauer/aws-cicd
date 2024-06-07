@@ -14,11 +14,17 @@ test_unit:
 test_api:
 	poetry run pytest tests/api -v
 
-cloudformation_deploy:
+deploy_codebuild:
 	aws cloudformation create-stack --stack-name my-codebuild-stack --template-body file://iac/codebuild_project.yml --capabilities CAPABILITY_IAM
 
-cloudformation_delete:
+delete_codebuild:
 	aws cloudformation delete-stack --stack-name my-codebuild-stack
+
+deploy_oidc:
+	aws cloudformation create-stack --stack-name github-odic --template-body file://iac/github_oidc.yml --capabilities CAPABILITY_NAMED_IAM
+
+delete_oidc:
+	aws cloudformation delete-stack --stack-name github-odic
 
 docker_login:
 	aws ecr get-login-password --region $(AWS_REGION) | docker login --username AWS --password-stdin $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com
