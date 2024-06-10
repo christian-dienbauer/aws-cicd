@@ -1,6 +1,7 @@
-[![Super-Linter](https://github.com/dieni/aws-cicd/actions/workflows/super-linter/badge.svg)](https://github.com/marketplace/actions/super-linter)
-
 # Continuous Integration and Continuous Delivery with GitHub Actions and AWS
+
+[![Super-Linter](https://github.com/dieni/aws-cicd/actions/workflows/super-linter.yml/badge.svg)](https://github.com/marketplace/actions/super-linter)
+
 
 Welcome, this repository demonstrates a robust CI/CD pipeline using Python, GitHub Actions, and AWS CodeBuild. This repository provides a comprehensive guide and implementation for automating the integration and delivery process of your applications, leveraging the power of AWS for scalable and efficient build processes.
 
@@ -44,7 +45,7 @@ In order to use Amazon Web Services you have to create an account. The sign up i
 Hint: For best practices, create a separate IAM user for this project and don't use the root account
 
 ### Install and Configure AWS Cli
-The AWS CLI is used to deploy the CloudFormation stack, create an AWS Elastic Container Registry for the applicaiton and push the the docker images to this registry. The CloudFormation stack is deployed from your development envrionment, same as the creationg of the docker registry on AWS. If you don't want to use the CLI for this, you can also use the management console to deploy the CloudFormation stack and create the registry. 
+The AWS CLI is used to deploy the CloudFormation stack, create an AWS Elastic Container Registry for the applicaiton and push the the docker images to this registry. The CloudFormation stack is deployed from your development envrionment, same as the creationg of the docker registry on AWS. If you don't want to use the CLI for this, you can also use the management console to deploy the CloudFormation stack and create the registry.
 
 The docker images are built using the GitHub runners and will be deployed to the AWS ECR using the CLI. Therefore, it is mandatory to provide the runners with the credentials. This is done via GitHub secrets.
 
@@ -61,7 +62,7 @@ The [CloudFormation Stack](iac/codebuild_project.yml) in this repository creates
 
 If you set up the AWS CLI in your development environment, deploy the CloudFormation stack by using the [Makefile](Makefile). Enter following command
 
-```
+```bash
 make cloudformation_deploy
 ```
 
@@ -78,7 +79,7 @@ TBD
 
 ## Use OIDC to use GitHub as an Identity Provider and retrieve short lived credentials to connect to AWS
 
-Useful links:
+<!-- Useful links:
 - https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services
 - https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc.html
-- https://aws.amazon.com/blogs/security/use-iam-roles-to-connect-github-actions-to-actions-in-aws/
+- https://aws.amazon.com/blogs/security/use-iam-roles-to-connect-github-actions-to-actions-in-aws/ -->

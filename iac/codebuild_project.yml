@@ -22,6 +22,13 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Ref BucketName
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      VersioningConfiguration:
+        Status: Enabled
 
   # IAM Role for CodeBuild
   CodeBuildServiceRole:
@@ -41,8 +48,8 @@ Resources:
             Statement: 
               - Effect: Allow
                 Resource: 
-                  - !Sub arn:aws:s3:::${BucketName}
-                  - !Sub arn:aws:s3:::${BucketName}/*
+                  - !Sub arn:${AWS::Partition}:s3:::${BucketName}
+                  - !Sub arn:${AWS::Partition}:s3:::${BucketName}/*
                 Action: 
                   - s3:GetObject
                   - s3:PutObject
@@ -51,15 +58,15 @@ Resources:
                   - s3:GetBucketLocation
               - Effect: Allow
                 Resource:
-                  - !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/${CodeBuildName}
-                  - !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/${CodeBuildName}:*
+                  - !Sub arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/${CodeBuildName}
+                  - !Sub arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/${CodeBuildName}:*
                 Action:
                   - logs:CreateLogGroup
                   - logs:CreateLogStream
                   - logs:PutLogEvents
               - Effect: Allow
                 Resource:
-                  - !Sub arn:aws:codebuild:${AWS::Region}:${AWS::AccountId}:report-group/${CodeBuildName}-*
+                  - !Sub arn:${AWS::Partition}:codebuild:${AWS::Region}:${AWS::AccountId}:report-group/${CodeBuildName}-*
                 Action:
                   - codebuild:CreateReportGroup
                   - codebuild:CreateReport

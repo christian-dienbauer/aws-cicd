@@ -1,5 +1,9 @@
 name: Unit API
 on: [pull_request]
+
+permissions:
+  contents: read
+
 jobs:
   Api-Tests:
     runs-on: codebuild-github-cicd-${{ github.run_id }}-${{ github.run_attempt }}

@@ -5,6 +5,10 @@ on:
       - '**.md'
     branches-ignore:
       - main
+
+permissions:
+  contents: read
+
 jobs:
   Unit-Tests:
     runs-on: codebuild-github-cicd-${{ github.run_id }}-${{ github.run_attempt }}
