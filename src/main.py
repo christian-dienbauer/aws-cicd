@@ -1,5 +1,5 @@
 """
-Provides an interface to retrieve a greeting. 
+Provides an interface to retrieve a greeting.
 """
 
 from fastapi import FastAPI

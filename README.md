@@ -47,7 +47,8 @@ Hint: For best practices, create a separate IAM user for this project and don't 
 
 ### Install and Configure AWS Cli
 
-The AWS CLI is used to deploy the CloudFormation stack, create an AWS Elastic Container Registry for the applicaiton and push the the docker images to this registry. The CloudFormation stack is deployed from your development envrionment, same as the creationg of the docker registry on AWS. If you don't want to use the CLI for this, you can also use the management console to deploy the CloudFormation stack and create the registry.
+The AWS CLI is used to deploy the CloudFormation stack, create an AWS Elastic Container Registry for the applicaiton and push the the docker images to this registry. The CloudFormation stack is deployed from your development envrionment, same as the creationg of the docker registry on AWS.
+If you don't want to use the CLI for this, you can also use the management console to deploy the CloudFormation stack and create the registry.
 
 The docker images are built using the GitHub runners and will be deployed to the AWS ECR using the CLI. Therefore, it is mandatory to provide the runners with the credentials. This is done via GitHub secrets.
 
