@@ -3,6 +3,8 @@ on:
   push:
     paths-ignore:
       - '**.md'
+    branches-ignore:
+      - main
 jobs:
   Unit-Tests:
     runs-on: codebuild-github-cicd-${{ github.run_id }}-${{ github.run_attempt }}
@@ -16,4 +18,5 @@ jobs:
           poetry install
       - name: Run unit tests
         run: make test_unit
+
   

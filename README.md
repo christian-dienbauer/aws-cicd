@@ -1,3 +1,5 @@
+[![Super-Linter](https://github.com/dieni/aws-cicd/actions/workflows/super-linter/badge.svg)](https://github.com/marketplace/actions/super-linter)
+
 # Continuous Integration and Continuous Delivery with GitHub Actions and AWS
 
 Welcome, this repository demonstrates a robust CI/CD pipeline using Python, GitHub Actions, and AWS CodeBuild. This repository provides a comprehensive guide and implementation for automating the integration and delivery process of your applications, leveraging the power of AWS for scalable and efficient build processes.
