@@ -1,4 +1,5 @@
 import pytest
+
 from src.greetings import get_greeting
 
 
@@ -8,7 +9,8 @@ def test_greetings():
 
     greeting = get_greeting(name)
 
-    assert greeting == 'Hello World'
+    assert greeting == "Hello World"
+
 
 def test_greetings_no_name():
 
