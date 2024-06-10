@@ -33,7 +33,7 @@ jobs:
       - name: Install virtual envrionment
         run: poetry install
       - name: Activate Poetry environment
-        run: source $HOME/.poetry/env
+        run: source $GITHUB_WORKSPACE/.venv/bin/activate
       - name: Super-linter
         uses: super-linter/super-linter@v6.6.0  # x-release-please-version
         env:
