@@ -30,6 +30,8 @@ jobs:
           virtualenvs-create: true
           virtualenvs-in-project: true
           installer-parallel: true
+      - name: Install virtual envrionment
+        run: poetry install
       - name: Super-linter
         uses: super-linter/super-linter@v6.6.0  # x-release-please-version
         env:
