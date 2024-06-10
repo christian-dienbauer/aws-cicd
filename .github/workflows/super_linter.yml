@@ -32,6 +32,8 @@ jobs:
           installer-parallel: true
       - name: Install virtual envrionment
         run: poetry install
+      - name: Activate Poetry environment
+        run: source $HOME/.poetry/env
       - name: Super-linter
         uses: super-linter/super-linter@v6.6.0  # x-release-please-version
         env:
