@@ -1,3 +1,7 @@
+"""
+Setup the basics before running the api tests
+"""
+
 import subprocess
 import time
 

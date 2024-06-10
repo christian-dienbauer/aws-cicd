@@ -1,9 +1,16 @@
+"""
+Test the api
+"""
+
 import requests
 
 SERVER_URL = "http://0.0.0.0:8000"
 
 
 def test_root():
+    """
+    Test the root endpoint of the api
+    """
 
     response = requests.get(f"{SERVER_URL}/")
 

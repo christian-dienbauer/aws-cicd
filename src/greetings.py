@@ -1,3 +1,8 @@
+"""
+The greetings module
+"""
+
+
 def get_greeting(name: str):
     """
     Greet

@@ -1,9 +1,16 @@
+"""
+Test the greetings module
+"""
+
 import pytest
 
 from src.greetings import get_greeting
 
 
 def test_greetings():
+    """
+    Test with a valid input name
+    """
 
     name = "World"
 
@@ -13,6 +20,9 @@ def test_greetings():
 
 
 def test_greetings_no_name():
+    """
+    Test without an input.
+    """
 
     name = ""
 
