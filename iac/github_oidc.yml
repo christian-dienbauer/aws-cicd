@@ -41,7 +41,7 @@ Resources:
                   - 'ecr:UploadLayerPart'
                   - 'ecr:CompleteLayerUpload'
                 Resource: 
-                  - '*'
+                  - '*' # Todo: Restrict access based on limited privileges
 
 Outputs:
   GitHubOIDCProviderArn:
