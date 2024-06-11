@@ -14,7 +14,6 @@ The intention of this project is to standardize the setup of a new project. Feel
 - [Getting Started](#getting-started)
 - [Usage](#usage)
 - [Contributing](#contributing)
-- [License](#license)
 - [Contact](#contact)
 
 ## Features
@@ -72,66 +71,82 @@ As we created a new repository and configured the parameters of the CloudFormati
 
 1. Provision the AWS CodeBuild project
 
+    This will create a CodeBuild project, a S3 Bucket to store the build artifacts as well as the necessary Service Role with the permissions to write to S3 as well as to send logs to AWS Cloudwatch.
+
     ```bash
-    make deploy_codebuild
+    make provision_codebuild
     ```
+
+    ![AWS CodeBuild project](docs/codebuild_project.png)
 
 2. Provision GitHub as an OIDC
-   
+
+    The following command will define GitHub as an OIDC provider and creates an IAM role with a web identity that the GitHub actions can use to push docker images to AWS ECR
+
    ```bash
-    make deploy_oidc
+    make provision_oidc
     ```
 
-3. Provision ECR repository
-   
+    ![GitHub OIDC](docs/github_oidc.png)
+
+3. Provision ECR Repository
+  
+    Finally, create an AWS ECR Repository where the docker images are pushed to.
+
    ```bash
-    make deploy_ecr
+    make provision_ecr
     ```
 
 ## Usage
 
+### Local development
 
-To use the run the application locally you can use Poetry to install a virtual environment by using
+To run the application locally you can use Poetry to install the necessary packages in a virtual environment.
 
 ```bash
 poetry install
 ```
 
-Configure your favorite IDE to use the python interpreter from the virtual envrionment.
+After this you have the options to
 
-To run the application
+1. Run the application
 
-```bash
-make run
-```
+    ```bash
+    make run
+    ```
 
-To run the unit tests
+2. Execute the unit tests
 
-```bash
-make test_unit
-```
+    ```bash
+    make test_unit
+    ```
 
-To run the api tests
+3. Execute the API tests
 
-```bash
-make test_api
-```
+    ```bash
+    make test_api
+    ```
 
-When you push your code changes to any branch that is not the *main* branch, GitHub actions will be executed to
+### Push to Feature Branch
 
-1. Run the unit tests
-2. Lint the code
+When you push your code to any branch except the *main* branch, GitHub actions will run the [unit tests](.github/workflows/test_unit.yml).
 
-If you feel confident to create a pull request to the main branch, the GitHub actions will
+### Pull Request
 
-1. Run the API tests
+When you create a pull request to any branch, GithHub actions will run the [api tests](.github/workflows/test_api.yml) as well as perform code checks to ensure code quality by using a [linter](.github/workflows/super_linter.yml).
 
-The pull request will be blocked until the unit tests, the linter checks and the API tests pass.
+### Merge to Main Branch
 
-If all the checks pass and you merge the pull request into the *main* branch, the GitHub actions will build and push the a docker image with the image tag of the commit to AWS ECR.
+If all the checks pass and you merge the pull request into the *main* branch, the GitHub actions will [build and push](.github/workflows/build_and_push.yml) the a docker image with the image tag of the commit to AWS ECR.
 
 ## Contributing
 
+If you have any ideas for improvents or even coded it already, please open a [GitHub Issue](issues) or open a [Pull Request](pulls).
+
 ## License
 
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 ## Contact
+
+The easiest way to contact me is via my [LinkedIn](https://www.linkedin.com/in/christian-dienbauer/) profile.
