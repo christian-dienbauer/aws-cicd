@@ -1,6 +1,21 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: CloudFormation template to create an OIDC identity provider for GitHub.
 
+Parameters:
+  ConditionKey: # Update to your needs
+    Default: repo:dieni/*
+    Type: String
+    Description: Evaluating this condition key in the role trust policy limits which GitHub actions are able to assume the role.
+  GitHubActionsRoleName: # Update to your needs
+    Default: GitHubActionsRole
+    Type: String
+    Description: The name of the role that is used by the OIDC provider.
+  ECRAccessPolicyName: # Update to your needs
+    Default: ECRAccessPolicy
+    Type: String
+    Description: The name of the policy that is attached to the IAM role.
+
+
 Resources:
   GitHubOIDCProvider:
     Type: 'AWS::IAM::OIDCProvider'
@@ -14,7 +29,7 @@ Resources:
   GitHubActionsRole:
     Type: 'AWS::IAM::Role'
     Properties: 
-      RoleName: 'GitHubActionsRole'
+      RoleName: !Ref GitHubActionsRoleName
       AssumeRolePolicyDocument: 
         Version: '2012-10-17'
         Statement: 
@@ -26,9 +41,9 @@ Resources:
               StringEquals: 
                 'token.actions.githubusercontent.com:aud': 'sts.amazonaws.com'
               StringLike: 
-                'token.actions.githubusercontent.com:sub': 'repo:dieni/*' # Update to your needs
+                'token.actions.githubusercontent.com:sub': !Sub '${ConditionKey}'
       Policies:
-        - PolicyName: 'ECRAccessPolicy'
+        - PolicyName: !Ref ECRAccessPolicyName
           PolicyDocument: 
             Version: '2012-10-17'
             Statement: 
