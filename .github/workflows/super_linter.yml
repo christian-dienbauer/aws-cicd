@@ -1,7 +1,9 @@
 name: Lint
 
 on:
-  pull_request: null
+  pull_request:
+    paths-ignore:
+      - '**.md'
 
 permissions: { }
 
