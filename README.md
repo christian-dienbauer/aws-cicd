@@ -133,11 +133,15 @@ When you push your code to any branch except the main branch, GitHub Actions wil
 
 ### Pull Request
 
-When you create a pull request to any branch, GitHub Actions will run the API tests as well as perform code checks to ensure code quality by using a [linter](.github/workflows/super_linter.yml).
+When you create a pull request to any branch, GitHub Actions will run the [API tests](.github/workflows/test_api.yml) as well as perform code checks to ensure code quality by using a [linter](.github/workflows/super_linter.yml).
+
+![PR Checks](docs/pr_checks.png)
 
 ### Merge to Main Branch
 
 If all the checks pass and you merge the pull request into the main branch, the GitHub Actions will [build and push](.github/workflows/build_and_push.yml) a Docker image with the image tag of the commit to AWS ECR.
+
+![ECR Repository](docs/ecr_screenshot.png)
 
 ## Contributing
 
