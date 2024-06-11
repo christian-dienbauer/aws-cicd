@@ -1,5 +1,8 @@
-name: Unit API
-on: [pull_request]
+name: API Tests
+on:
+  pull_request:
+    paths-ignore:
+      - '**.md'
 
 permissions:
   contents: read
