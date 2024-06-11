@@ -1,0 +1,23 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation template to create an AWS ECR repository.
+
+Parameters:
+  RepositoryName:
+    Default: my-app
+    Type: String
+    Description: The name of the repository in AWS ECR
+
+Resources:
+  ECRRepository:
+    Type: "AWS::ECR::Repository"
+    Properties: 
+      RepositoryName: !Ref RepositoryName
+
+Outputs:
+  ECRRepositoryUri:
+    Description: "URI of the created ECR repository"
+    Value: !GetAtt 
+      - ECRRepository
+      - RepositoryUri
+    Export:
+      Name: "ECRRepositoryUri"

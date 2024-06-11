@@ -14,17 +14,23 @@ test_unit:
 test_api:
 	poetry run pytest tests/api -v
 
-deploy_codebuild:
+provision_codebuild:
 	aws cloudformation create-stack --stack-name my-codebuild-stack --template-body file://iac/codebuild_project.yml --capabilities CAPABILITY_IAM
 
 delete_codebuild:
 	aws cloudformation delete-stack --stack-name my-codebuild-stack
 
-deploy_oidc:
-	aws cloudformation create-stack --stack-name github-odic --template-body file://iac/github_oidc.yml --capabilities CAPABILITY_NAMED_IAM
+provision_oidc:
+	aws cloudformation create-stack --stack-name github-oidc --template-body file://iac/github_oidc.yml --capabilities CAPABILITY_NAMED_IAM
 
 delete_oidc:
-	aws cloudformation delete-stack --stack-name github-odic
+	aws cloudformation delete-stack --stack-name github-oidc
+
+provision_ecr:
+	aws cloudformation create-stack --stack-name my-ecr-repo-stack --template-body file://iac/ecr_repository.yml
+
+delete_ecr:
+	aws cloudformation delete-stack --stack-name my-ecr-repo-stack
 
 docker_login:
 	aws ecr get-login-password --region $(AWS_REGION) | docker login --username AWS --password-stdin $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com
@@ -34,6 +40,3 @@ docker_build:
 
 docker_push:
 	docker push $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com/$(REPOSITORY_NAME):$(TAG)
-
-repository_create:
-	aws ecr create-repository --repository-name $(REPOSITORY_NAME) --region $(REGION)
