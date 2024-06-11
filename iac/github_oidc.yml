@@ -41,7 +41,7 @@ Resources:
               StringEquals: 
                 'token.actions.githubusercontent.com:aud': 'sts.amazonaws.com'
               StringLike: 
-                'token.actions.githubusercontent.com:sub': '${ConditionKey}'
+                'token.actions.githubusercontent.com:sub': !Sub '${ConditionKey}'
       Policies:
         - PolicyName: !Ref ECRAccessPolicyName
           PolicyDocument: 
