@@ -1,12 +1,12 @@
 # Continuous Integration and Continuous Delivery using Amazon Web Services
 
-Welcome, this repository demonstrates CI/CD pipeline for a simple Python application that is containerized and delivered to a AWS Elastic Container Registry.
+Welcome! This repository demonstrates a CI/CD pipeline for a simple Python application that is containerized and delivered to an AWS Elastic Container Registry.
 
-The necessary infrastructure is provisioned via Infrastructe as Code using AWS CloudFormation. Once the infrastructure is provisioned GitHub actions are used to run Unit-, API Tests as well as to Lint your code during continious integration. When you feel confident to merge into the main branch, the application is dockerized and pushed to AWS Elastic Container Registry.
+The necessary infrastructure is provisioned via Infrastructure as Code using AWS CloudFormation. Once the infrastructure is provisioned, GitHub Actions are used to run unit tests, API tests, and to lint your code during continuous integration. When you feel confident to merge into the main branch, the application is dockerized and pushed to AWS Elastic Container Registry.
 
-In the following steps we will mention the AWS services that are used, how to configure the code to provision the infrastrucutre, how to provision it and finally how to use it.
+In the following steps, we will mention the AWS services that are used, how to configure the code to provision the infrastructure, how to provision it, and finally how to use it.
 
-The intention of this project is to standardize the setup of a new project. Feel free to fork it and modify it to your needs. If you have any questions or recommendations to improve it, please create an GitHub Issue.
+The intention of this project is to standardize the setup of a new project. Feel free to fork it and modify it to your needs. If you have any questions or recommendations to improve it, please create a GitHub issue.
 
 ## Table of Contents
 
@@ -18,7 +18,7 @@ The intention of this project is to standardize the setup of a new project. Feel
 
 ## Features
 
-- **Python Web APP**: A simple FastAPI application that includes Unit and API- Tests
+- **Python Web App**: A simple FastAPI application that includes unit and API tests.
 - **GitHub Actions**: Automate workflows directly from your GitHub repository for seamless integration.
 - **AWS CodeBuild**: Host GitHub runners on AWS CodeBuild for efficient build and test processes.
 - **Docker Integration**: Build and push Docker images to AWS Elastic Container Registry (ECR) upon merging to the main branch.
@@ -26,52 +26,52 @@ The intention of this project is to standardize the setup of a new project. Feel
 
 ## Getting Started
 
-Now, let's setup the project. We will talk about the prerequisits first, before we configure the infrastrucutre and finally provision it.
+Now, let's set up the project. We will talk about the prerequisites first, before we configure the infrastructure and finally provision it.
 
 ### Prerequisites
 
-As we are using services from AWS, we need an AWS Account and an IAM user with the necessary permissions to
+As we are using services from AWS, we need an AWS account and an IAM user with the necessary permissions to:
 
 - Create CloudFormation stacks
 - Use AWS CodeBuild
-- Create an IAM Role that is used by an OIDC Provider
-- Access to S3 to store build artifacts
-- Persmissions to push docker images to AWS ECR
+- Create an IAM Role that is used by an OIDC provider
+- Access S3 to store build artifacts
+- Permissions to push Docker images to AWS ECR
 
-For detailed information checkout the AWS CloudFormation templates within the [iac](iac) folder.
+For detailed information, check out the AWS CloudFormation templates within the [iac](iac) folder.
 
-As this is project creates a CI/CD pipeline using a GitHub repository, its required that you create your own. Either fork this repository or create a new one where you upload the files from this repository.
+As this project creates a CI/CD pipeline using a GitHub repository, it's required that you create your own. Either fork this repository or create a new one where you upload the files from this repository.
 
-Last, but not least, the AWS CLI needs to be configured as we used it to deploy the CloudFormation templates and create a repository in AWS ECR. Have a look AWS documentation on [How to setup the CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-quickstart.html).
+Last but not least, the AWS CLI needs to be configured as we use it to deploy the CloudFormation templates and create a repository in AWS ECR. Have a look at the AWS documentation on [how to set up the CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-quickstart.html).
 
 Python version: 3.11
 Poetry version: 1.8
 
 ### Configuration
 
-Speaking about the AWS CloudFormation templates. This is also the place where we want to adjust the configuration in order to provision the infrastructure.
-The templates contain currently a few details that make it work within this GitHub account. Follwing parameter are mandatory to change:
+Speaking about the AWS CloudFormation templates, this is also the place where we want to adjust the configuration in order to provision the infrastructure.
+The templates currently contain a few details that make it work within this GitHub account. The following parameters are mandatory to change:
 
-1. AWS CodeBuild uses a WebHook to your repository. Therefore, provide the correct URL to you GitHub repository by updating the default value for the [GitHubRepo](iac/codebuild_project.yml#L13) parameter.
-2. GitHub will be defined as an OIDC provider that will consume an IAM Role that allows it to push images to AWS ECR. Update the [ConditionKey](iac/github_oidc.yml#L5) parameter to limit which GitHub actions are able to assume the role. For more information have a look on the [GitHub documentation](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services).
+1. AWS CodeBuild uses a webhook to your repository. Therefore, provide the correct URL to your GitHub repository by updating the default value for the [GitHubRepo](iac/codebuild_project.yml#L13) parameter.
+2. GitHub will be defined as an OIDC provider that will consume an IAM Role that allows it to push images to AWS ECR. Update the [ConditionKey](iac/github_oidc.yml#L5) parameter to limit which GitHub actions are able to assume the role. For more information, have a look at the [GitHub documentation](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services).
 3. Depending on which AWS region you deploy the CloudFormation stacks, you have to update the values in the [Makefile](Makefile#L4) as well as in the [GitHub Action](.github/workflows/build_and_push.yml#L9).
 4. Your AWS account number as it is used by the [Makefile](Makefile#L5) to deploy the CloudFormation stacks and the [GitHub Action](.github/workflows/build_and_push.yml#L24) to consume the AWS role.
 
-Optionally, you can update following parameter
+Optionally, you can update the following parameters:
 
 1. [CodeBuild name](iac/codebuild_project.yml#L9) of your project.
-2. [S3 Bucket name](iac/codebuild_project.yml#L5) that CodeBuild uses to store build artifacts.
+2. [S3 bucket name](iac/codebuild_project.yml#L5) that CodeBuild uses to store build artifacts.
 3. [IAM Role name](iac/github_oidc.yml#L9) that is used by the OIDC provider.
-4. [Policy name](iac/github_oidc.yml#L13) that is associated with the IAM role to provide permissions to push docker images to AWS ECR. If you change the name, update it also within the [GitHub Action](.github/workflows/build_and_push.yml#L24)
-5. [Repository name](iac/ecr_repository.yml#L6) in AWS ECR where the docker images are pushed to. If you change the value, make sure you also update it in the [Makefile](Makefile#L2) as well as in the [GitHub Action](.github/workflows/build_and_push.yml#L32)
+4. [Policy name](iac/github_oidc.yml#L13) that is associated with the IAM role to provide permissions to push Docker images to AWS ECR. If you change the name, update it also within the [GitHub Action](.github/workflows/build_and_push.yml#L24).
+5. [Repository name](iac/ecr_repository.yml#L6) in AWS ECR where the Docker images are pushed to. If you change the value, make sure you also update it in the [Makefile](Makefile#L2) as well as in the [GitHub Action](.github/workflows/build_and_push.yml#L32).
 
 ### Provision Infrastructure
 
-As we created a new repository and configured the parameters of the CloudFormation template accordingly, we can now go ahead an provision the infrastructure. When you followed the steps in the configuration section, you can make use of the commands defined within the [Makefile](Makefile).
+As we created a new repository and configured the parameters of the CloudFormation template accordingly, we can now go ahead and provision the infrastructure. When you follow the steps in the configuration section, you can make use of the commands defined within the [Makefile](Makefile).
 
 1. Provision the AWS CodeBuild project
 
-    This will create a CodeBuild project, a S3 Bucket to store the build artifacts as well as the necessary Service Role with the permissions to write to S3 as well as to send logs to AWS Cloudwatch.
+    This will create a CodeBuild project, an S3 bucket to store the build artifacts, and the necessary service role with the permissions to write to S3 as well as to send logs to AWS CloudWatch.
 
     ```bash
     make provision_codebuild
@@ -81,7 +81,7 @@ As we created a new repository and configured the parameters of the CloudFormati
 
 2. Provision GitHub as an OIDC
 
-    The following command will define GitHub as an OIDC provider and creates an IAM role with a web identity that the GitHub actions can use to push docker images to AWS ECR
+    The following command will define GitHub as an OIDC provider and create an IAM role with a web identity that the GitHub Actions can use to push Docker images to AWS ECR.
 
    ```bash
     make provision_oidc
@@ -91,7 +91,7 @@ As we created a new repository and configured the parameters of the CloudFormati
 
 3. Provision ECR Repository
   
-    Finally, create an AWS ECR Repository where the docker images are pushed to.
+    Finally, create an AWS ECR repository where the Docker images are pushed to.
 
    ```bash
     make provision_ecr
@@ -99,15 +99,15 @@ As we created a new repository and configured the parameters of the CloudFormati
 
 ## Usage
 
-### Local development
+### Local Development
 
-To run the application locally you can use Poetry to install the necessary packages in a virtual environment.
+To run the application locally, you can use Poetry to install the necessary packages in a virtual environment.
 
 ```bash
 poetry install
 ```
 
-After this you have the options to
+After this, you have the options to:
 
 1. Run the application
 
@@ -129,19 +129,19 @@ After this you have the options to
 
 ### Push to Feature Branch
 
-When you push your code to any branch except the *main* branch, GitHub actions will run the [unit tests](.github/workflows/test_unit.yml).
+When you push your code to any branch except the main branch, GitHub Actions will run the [unit tests](.github/workflows/test_unit.yml).
 
 ### Pull Request
 
-When you create a pull request to any branch, GithHub actions will run the [api tests](.github/workflows/test_api.yml) as well as perform code checks to ensure code quality by using a [linter](.github/workflows/super_linter.yml).
+When you create a pull request to any branch, GitHub Actions will run the API tests as well as perform code checks to ensure code quality by using a [linter](.github/workflows/super_linter.yml).
 
 ### Merge to Main Branch
 
-If all the checks pass and you merge the pull request into the *main* branch, the GitHub actions will [build and push](.github/workflows/build_and_push.yml) the a docker image with the image tag of the commit to AWS ECR.
+If all the checks pass and you merge the pull request into the main branch, the GitHub Actions will [build and push](.github/workflows/build_and_push.yml) a Docker image with the image tag of the commit to AWS ECR.
 
 ## Contributing
 
-If you have any ideas for improvents or even coded it already, please open a [GitHub Issue](issues) or open a [Pull Request](pulls).
+If you have any ideas for improvements or have already coded them, please open a [GitHub Issue](issues) or a [Pull Request](pulls).
 
 ## License
 
