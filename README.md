@@ -52,18 +52,18 @@ Poetry version: 1.8
 Speaking about the AWS CloudFormation templates. This is also the place where we want to adjust the configuration in order to provision the infrastructure.
 The templates contain currently a few details that make it work within this GitHub account. Follwing parameter are mandatory to change:
 
-1. AWS CodeBuild uses a WebHook to your repository. Therefore, provide the correct URL to you GitHub repository by updating the default value for the [GitHubRepo](iac/codebuild_project.yml#13) parameter.
-2. GitHub will be defined as an OIDC provider that will consume an IAM Role that allows it to push images to AWS ECR. Update the [ConditionKey](iat/github_oidc.yml) parameter to limit which GitHub actions are able to assume the role. For more information have a look on the [GitHub documentation](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services).
-3. Depending on which AWS region you deploy the CloudFormation stacks, you have to update the values in the [Makefile](Makefile#4) as well as in the [GitHub Action](.github/workflows/build_and_push.yml#9).
-4. Your AWS account number as it is used by the [Makefile](Makefile#5) to deploy the CloudFormation stacks and the [GitHub Action](.github/workflows/build_and_push.yml#24) to consume the AWS role.
+1. AWS CodeBuild uses a WebHook to your repository. Therefore, provide the correct URL to you GitHub repository by updating the default value for the [GitHubRepo](iac/codebuild_project.yml#L13) parameter.
+2. GitHub will be defined as an OIDC provider that will consume an IAM Role that allows it to push images to AWS ECR. Update the [ConditionKey](iac/github_oidc.yml#L5) parameter to limit which GitHub actions are able to assume the role. For more information have a look on the [GitHub documentation](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services).
+3. Depending on which AWS region you deploy the CloudFormation stacks, you have to update the values in the [Makefile](Makefile#L4) as well as in the [GitHub Action](.github/workflows/build_and_push.yml#L9).
+4. Your AWS account number as it is used by the [Makefile](Makefile#L5) to deploy the CloudFormation stacks and the [GitHub Action](.github/workflows/build_and_push.yml#L24) to consume the AWS role.
 
 Optionally, you can update following parameter
 
-1. [CodeBuild name](iac/codebuild_project.yml#9) of your project.
-2. [S3 Bucket name](iac/codebuild_project.yml#5) that CodeBuild uses to store build artifacts.
-3. [IAM Role name](iac/github_oidc.yml#9) that is used by the OIDC provider.
-4. [Policy name](iac/github_oidc.yml#13) that is associated with the IAM role to provide permissions to push docker images to AWS ECR. If you change the name, update it also within the [GitHub Action](.github/workflows/build_and_push.yml#24)
-5. [Repository name](iac/ecr_repository.yml#6) in AWS ECR where the docker images are pushed to. If you change the value, make sure you also update it in the [Makefile](Makefile#2) as well as in the [GitHub Action](.github/workflows/build_and_push.yml#32)
+1. [CodeBuild name](iac/codebuild_project.yml#L9) of your project.
+2. [S3 Bucket name](iac/codebuild_project.yml#L5) that CodeBuild uses to store build artifacts.
+3. [IAM Role name](iac/github_oidc.yml#L9) that is used by the OIDC provider.
+4. [Policy name](iac/github_oidc.yml#L13) that is associated with the IAM role to provide permissions to push docker images to AWS ECR. If you change the name, update it also within the [GitHub Action](.github/workflows/build_and_push.yml#L24)
+5. [Repository name](iac/ecr_repository.yml#L6) in AWS ECR where the docker images are pushed to. If you change the value, make sure you also update it in the [Makefile](Makefile#L2) as well as in the [GitHub Action](.github/workflows/build_and_push.yml#L32)
 
 ### Provision Infrastructure
 
