@@ -1,12 +1,12 @@
 # Continuous Integration and Continuous Delivery using Amazon Web Services
 
-Welcome! This repository demonstrates a CI/CD pipeline for a simple Python application that is containerized and delivered to an AWS Elastic Container Registry.
+This repository demonstrates a CI/CD pipeline for a simple Python application that is containerized and delivered to an AWS Elastic Container Registry.
 
 The necessary infrastructure is provisioned via Infrastructure as Code using AWS CloudFormation. Once the infrastructure is provisioned, GitHub Actions are used to run unit tests, API tests, and to lint your code during continuous integration. When you feel confident to merge into the main branch, the application is dockerized and pushed to AWS Elastic Container Registry.
 
 In the following steps, we will mention the AWS services that are used, how to configure the code to provision the infrastructure, how to provision it, and finally how to use it.
 
-The intention of this project is to standardize the setup of a new project. Feel free to fork it and modify it to your needs. If you have any questions or recommendations to improve it, please create a GitHub issue.
+The intention of this project is to standardize the setup of a new project. Feel free to fork it and modify it to your needs.
 
 ## Table of Contents
 
@@ -18,11 +18,11 @@ The intention of this project is to standardize the setup of a new project. Feel
 
 ## Features
 
-- **Python Web App**: A simple FastAPI application that includes unit and API tests.
-- **GitHub Actions**: Automate workflows directly from your GitHub repository for seamless integration.
 - **AWS CodeBuild**: Host GitHub runners on AWS CodeBuild for efficient build and test processes.
+- **GitHub Actions**: Automate workflows directly from your GitHub repository for seamless integration.
 - **Docker Integration**: Build and push Docker images to AWS Elastic Container Registry (ECR) upon merging to the main branch.
 - **AWS CloudFormation**: Automate the setup of the necessary AWS infrastructure using CloudFormation templates.
+- **Python Web App**: A simple FastAPI application that includes unit and API tests.
 
 ## Getting Started
 
@@ -145,7 +145,7 @@ If all the checks pass and you merge the pull request into the main branch, the 
 
 ## Contributing
 
-If you have any ideas for improvements or have already coded them, please open a [GitHub Issue](issues) or a [Pull Request](pulls).
+If you have ideas for improvements or have already implemented them, please open a [GitHub Issue](../../issues) or a [Pull Request](../../pulls).
 
 ## License
 
